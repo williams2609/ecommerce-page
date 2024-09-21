@@ -1,0 +1,13 @@
+.navBar{
+    background-color: rgba(1, 101, 114, 0.644);
+    height: 70px;
+
+}
+.link{
+    text-decoration: none;
+    color: rgb(216, 213, 213) ;
+    margin: none;
+    margin: 10px;
+    font-size: 1.3rem;
+    
+}
