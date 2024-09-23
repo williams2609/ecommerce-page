@@ -1,0 +1,41 @@
+.carta-productos{
+margin: 25px;
+height: 60vh;
+padding: 0;
+
+}
+.Img{
+    width: 50%;
+    height: 40%;
+    margin: 10px;
+}
+.contenedor-imagen{
+    background-color: white;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.list-group-flush{
+    width: 100%;
+    border-top: 2px solid white;
+}
+.card-text{
+    
+    font-size: 1.2rem;
+}
+.info-descuento{
+ margin:0;
+ cursor: default
+}
+.titulo{
+    color: rgba(103, 12, 131, 0.877);
+}
+.link-carta{
+    background-color: white;
+    color: black;
+    border: 1px solid purple
+}
+.link-carta:hover{
+    background-color: rgb(80, 21, 95);
+}

@@ -1,0 +1,15 @@
+.contenedor-botoness{
+    flex-direction: column;
+}
+
+.contenedor-productosR {
+    overflow-x: auto; /* Permitir desplazamiento horizontal */
+    white-space: nowrap; /* Evitar que los elementos se rompan en líneas */
+}
+.contenedor-t{
+    flex-wrap: wrap;  
+}
+.botonAñadir{
+    background-color: rgb(224, 157, 12);
+    border: 1px solid rgb(158, 116, 0);
+}

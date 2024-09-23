@@ -1,0 +1,70 @@
+body{
+    background-color: rgb(255, 255, 255);
+}
+.hero{
+   
+    height: 70vh;
+    background-image: url('https://img.freepik.com/psd-gratis/icono-tienda-linea-ilustracion-procesamiento-3d-aislado_47987-8145.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-position: center;
+}
+.hero-content{
+    width: 40vw;
+    background-color: rgba(0, 0, 0, 0.459);
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    color: whitesmoke;
+}
+ /* Features Section */
+ .features {
+   
+    margin: 40px 0;
+    padding: 20px;
+    background-color: rgba(190, 190, 190, 0.575);
+  }
+  
+  .feature-item {
+    text-align: center;
+    margin-bottom: 10px;
+    
+  }
+  
+  .feature-item h2 {
+    font-size: 1.8em;
+    color: #007bff;
+    margin-bottom: 10px;
+  }
+  
+  .feature-item p {
+    font-size: 1.2em;
+    
+  }
+  
+  /* Footer */
+  .footer {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  .footer p {
+    margin: 0;
+    font-size: 1em;
+  }
+  .contenedor-titulo{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    margin: 50px;
+    font-family: helvetica;
+    color: rgb(117, 53, 129);
+  }

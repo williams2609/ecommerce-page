@@ -1,13 +1,37 @@
+.contenedor-nav{
+    background-color: rgba(76, 2, 99, 0.644); 
+    flex-wrap: wrap;   
+}
 .navBar{
-    background-color: rgba(1, 101, 114, 0.644);
-    height: 70px;
-
+    height: 100%;
 }
 .link{
     text-decoration: none;
     color: rgb(216, 213, 213) ;
-    margin: none;
     margin: 10px;
     font-size: 1.3rem;
     
+    
+}
+.contenedor-sesion{
+    flex-direction: row;
+}
+.contenedor-links{
+    flex-direction: row;
+}
+@media (max-width: 668px) {
+    .contenedor-sesion{
+    justify-content:center;
+}
+.contenedor-icono{
+    display: flex;
+    justify-content: center;
+}
+}
+.icono-nav{
+    margin-left: 10px;
+    margin-right: 20px;
+}
+.contenedor-carrito{
+    margin-left: 20px;
 }
