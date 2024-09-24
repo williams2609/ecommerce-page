@@ -13,7 +13,7 @@ function Home() {
         <div className="hero-content card text-center justify-content-center">
           <h1>Bienvenido a Nuestra Tienda</h1>
           <p>Encuentra los mejores productos al mejor precio</p>
-          <a href="/productos" className="hero-btn btn btn-primary">Ver Productos</a>
+          <a href="/Tienda" className="hero-btn btn btn-primary">Ver Productos</a>
         </div>
       </section>
 
