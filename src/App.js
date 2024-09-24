@@ -5,6 +5,7 @@ import Home from './componentes/Home';
 import Tienda from './componentes/Tienda';
 import Productos from './componentes/Productos';
 import { ProductosProvider } from './componentes/ProductosProvider';
+import Contacto from './componentes/Contacto';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path='/Home' element={<Home/>}/>
           <Route path='/Tienda' element={<Tienda/>}/>
+          <Route path='/Contacto' element={<Contacto/>}/>
           <Route path='/Tienda/:productId' element={<Productos/>}/>
         </Routes>
       </ProductosProvider>

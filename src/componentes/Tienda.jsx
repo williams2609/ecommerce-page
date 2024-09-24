@@ -78,119 +78,143 @@ const handleFilters = ()=>{
 
   return (
 <div className='contenedor-productos'>
-      {error && <p>{error}</p>}
-    <div className="navbar bg-light p-3">
-      <h3 className="navbar-brand titulo">Tienda</h3>
-      <form className="d-flex">
-          <input
-            type="text"
-            className="form-control me-2"
-            placeholder="Buscar producto"
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)} // Actualiza el estado de búsqueda
-          />
-          <button type="button" className="btn btn-outline-success">
-            Buscar
-          </button>
-      </form>
-    </div>
-        <div className='d-flex justify-content-center text-center'>
-             <h3 className='filtros f' onClick={handleFilters}>Usar Filtros</h3>
-        </div>
+  {error && <p>{error}</p>}
+  
+  <div className="navbar bg-light p-3">
+    <h3 className="navbar-brand titulo">Tienda</h3>
+    <form className="d-flex">
+      <input
+        type="text"
+        className="form-control me-2"
+        placeholder="Buscar producto"
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)} // Actualiza el estado de búsqueda
+      />
+      <button type="button" className="btn btn-outline-success">
+        Buscar
+      </button>
+    </form>
+  </div>
+  
+  <div className='d-flex justify-content-center text-center'>
+    <h3 className='filtros f' onClick={handleFilters}>Usar Filtros</h3>
+  </div>
 
-         {filtros && 
-         <>
-       <div className='container d-flex justify-content-between'>
-            <div className='d-flex align-items-center contenedor-categoria'>
-          
-                <h4 className='filtros'>Categoria</h4>
-                <select className="selector-categoria" value={selectedCategory} onChange={handleSelectedCategory}>
-                  <option value="">Todas las Categorias</option>
-                  {categories.map((categoria,index)=>(
-                    <option style={{backgroundColor: "rgb(102, 0, 128",
-                      color:"white"
-                    }} key={index}>{categoria}</option>
-                  ))}
-                </select>
-                </div>
-                <div className='text-center'>
-                  <h4 className='filtros'>Filtro Precio</h4>
-                  <div className='d-flex justify-content-center'>
-                    <label>Precio Minimo </label>
-                      <input
-                      className='input-rango'
-                      min="0"
-                      max="50000"
-                      step="10"
-                      type='range' 
-                      value={tempMinMax[0]}
-                      onChange={e => handleMaxmin(0,e.target.value)}
-                      />
-                    <label>€{tempMinMax[0]}</label>
-                </div>
-                <div className='contenedor-filtro-precio d-flex justify-content-center'>
-                    <div>
-                        <label>Precio Maximo</label>
-                          <input
-                          className='input-rango'
-                          min="0"
-                          max="50000"
-                          type='range' 
-                          step="10"
-                          value={tempMinMax[1]}
-                          onChange={e => handleMaxmin(1,e.target.value)}
-                          />
-                        <label>€{tempMinMax[1]}</label> 
-                    </div>    
-                    <div>
-                      <Button className='btn boton-precio' onClick={handleClick}>Filtrar Precio</Button>
-                    </div>
-                </div>
-                </div>
+  {filtros && (
+    <>
+      <div className='container d-flex justify-content-between'>
+        <div className='d-flex align-items-center contenedor-categoria'>
+          <h4 className='filtros'>Categoría</h4>
+          <select 
+            className="selector-categoria" 
+            value={selectedCategory} 
+            onChange={handleSelectedCategory}
+          >
+            <option value="">Todas las Categorías</option>
+            {categories.map((categoria, index) => (
+              <option 
+                style={{ backgroundColor: "rgb(102, 0, 128)", color: "white" }} 
+                key={index}
+              >
+                {categoria}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className='text-center'>
+          <h4 className='filtros'>Filtro Precio</h4>
+          <div className='d-flex justify-content-center'>
+            <label>Precio Mínimo </label>
+            <input
+              className='input-rango'
+              min="0"
+              max="50000"
+              step="10"
+              type='range' 
+              value={tempMinMax[0]}
+              onChange={e => handleMaxmin(0, e.target.value)}
+            />
+            <label>€{tempMinMax[0]}</label>
+          </div>
+          <div className='contenedor-filtro-precio d-flex justify-content-center'>
+            <div>
+              <label>Precio Máximo</label>
+              <input
+                className='input-rango'
+                min="0"
+                max="50000"
+                type='range' 
+                step="10"
+                value={tempMinMax[1]}
+                onChange={e => handleMaxmin(1, e.target.value)}
+              />
+              <label>€{tempMinMax[1]}</label> 
+            </div>    
+            <div>
+              <Button className='btn boton-precio' onClick={handleClick}>
+                Filtrar Precio
+              </Button>
             </div>
-          </>}
-          <div className='container-fluid '>
-                <div className='contenedor-cartas row d-flex  align-items-center justify-content-center'>
-                    {products && 
-                    currentProducts.map((product,index)=>(
-              
-                     <Card key={index} className='col-7 col-sm-4 col-md-4 col-lg-3 col-xl-2 carta-productos d-flex justify-content-center align-items-center'>
-                          <Card.Img src={product.thumbnail} alt={product.title} className='Img justify-content-center d-flex' />
-                          <Card.Body className='body'>
-                              <Card.Title className=''>{product.title}</Card.Title>
-                              <Card.Text className='text-center'>
-                                ${product.price} 
-                              </Card.Text>
-                          </Card.Body>
-                          <ListGroup className="list-group-flush">
-                              <ListGroup.Item className='d-flex justify-content-between'>Categoria <p>{product.category}</p></ListGroup.Item>
-                              <ListGroup.Item className='d-flex justify-content-between'>Stock: <p>{product.stock}</p></ListGroup.Item>
-                              <ListGroup.Item className='discount d-flex align-items-center text-center justify-content-between '>Discount <p className='btn btn-warning d-flex info-descuento'>{product.discountPercentage}%</p></ListGroup.Item>
-                          </ListGroup>
-                          <Card.Body>
-                            <Card.Link className='btn btn-primary link-carta' onClick={()=>{handleNavigate(product)}}>Card Link</Card.Link>
-                          </Card.Body>
-                      </Card>))}
-                </div>
-               <div className='d-flex justify-content-center'>
-                  <Pagination>
-                        <Pagination.First onClick={() => paginate(1)}/>
-                          {currentPage !== 1 &&<Pagination.Prev onClick={() => paginate(currentPage -1)} />}
-                          <Pagination.Item>{currentPage}</Pagination.Item>
-                            {[...Array(totalPage).keys()].map(pageNumber => (
-                              <Pagination.Item 
-                                  key={pageNumber + 1} 
-                                  active={currentPage === pageNumber + 1} 
-                                  onClick={() => paginate(pageNumber + 1)}>
-                                  {pageNumber + 1}
-                              </Pagination.Item>))}
-                          {currentPage !== totalPage && <Pagination.Next onClick={()=> paginate(currentPage + 1)}/>}
-                        <Pagination.Last onClick={() => paginate(totalPage)}/>
-                  </Pagination>
-                </div>
-            </div>
-           
+          </div>
+        </div>
+      </div>
+    </>
+  )}
+  
+  <div className='container-fluid'>
+    <div className='contenedor-cartas row d-flex align-items-center justify-content-center'>
+      {products && 
+        currentProducts.map((product, index) => (
+          <Card 
+            key={index} 
+            className='col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 carta-productos d-flex justify-content-center align-items-center mb-4'
+          >
+            <Card.Img 
+              src={product.thumbnail} 
+              alt={product.title} 
+              className='Img justify-content-center d-flex' 
+            />
+            <Card.Body className='body'>
+              <Card.Title className=''>{product.title}</Card.Title>
+              <Card.Text className='text-center'>
+                ${product.price} 
+              </Card.Text>
+            </Card.Body>
+            <ListGroup className="list-group-flush">
+              <ListGroup.Item className='d-flex justify-content-between'>Categoría <p>{product.category}</p></ListGroup.Item>
+              <ListGroup.Item className='d-flex justify-content-between'>Stock: <p>{product.stock}</p></ListGroup.Item>
+              <ListGroup.Item className='discount d-flex align-items-center text-center justify-content-between '>Descuento <p className='btn btn-warning d-flex info-descuento'>{product.discountPercentage}%</p></ListGroup.Item>
+            </ListGroup>
+            <Card.Body>
+              <Card.Link className='btn btn-primary link-carta' onClick={() => { handleNavigate(product) }}>
+                Card Link
+              </Card.Link>
+            </Card.Body>
+          </Card>
+        ))
+      }
     </div>
+
+    <div className='d-flex justify-content-center'>
+      <Pagination>
+        <Pagination.First onClick={() => paginate(1)} />
+        {currentPage !== 1 && <Pagination.Prev onClick={() => paginate(currentPage - 1)} />}
+        <Pagination.Item>{currentPage}</Pagination.Item>
+        {[...Array(totalPage).keys()].map(pageNumber => (
+          <Pagination.Item 
+            key={pageNumber + 1} 
+            active={currentPage === pageNumber + 1} 
+            onClick={() => paginate(pageNumber + 1)}
+          >
+            {pageNumber + 1}
+          </Pagination.Item>
+        ))}
+        {currentPage !== totalPage && <Pagination.Next onClick={() => paginate(currentPage + 1)} />}
+        <Pagination.Last onClick={() => paginate(totalPage)} />
+      </Pagination>
+    </div>
+  </div>
+</div>
   )
 }
 
