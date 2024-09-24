@@ -6,6 +6,8 @@ import Tienda from './Paginas/Tienda';
 import Productos from './componentes/Productos';
 import { ProductosProvider } from './componentes/ProductosProvider';
 import Contacto from './Paginas/Contacto';
+import Login from './Paginas/Login.tsx';
+import CrearUsuario from './Paginas/CrearUsuario.jsx';
 
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
           <Route path='/Tienda' element={<Tienda/>}/>
           <Route path='/Contacto' element={<Contacto/>}/>
           <Route path='/Tienda/:productId' element={<Productos/>}/>
+          <Route path='/Login' element={<Login/>}/>
+          <Route path='/crear-cuenta' element={<CrearUsuario/>}/>
         </Routes>
       </ProductosProvider>
       </Router>

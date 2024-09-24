@@ -1,0 +1,22 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Permitir acceso a los datos del usuario autenticado
+    match /users/{userId} {
+      // Permitir que el usuario lea y escriba en su propio perfil
+      allow read, write: if request.auth.uid == userId;
+    }
+
+    // Permitir que cualquier persona lea los productos
+    match /products/{productId} {
+      allow read: if true;  // Cualquiera puede leer los productos
+      allow write: if request.auth != null && request.auth.token.role == 'admin'; // Solo un administrador puede escribir
+    }
+
+    // Permitir que los usuarios autenticados creen pedidos
+    match /orders/{orderId} {
+      allow read: if request.auth != null;  // Solo usuarios autenticados pueden leer sus pedidos
+      allow create: if request.auth != null; // Cualquier usuario autenticado puede crear un pedido
+      allow update, delete: if request.auth.uid == resource.data.userId; // Solo el usuario que hizo el pedido puede actualizar o eliminarlo
+    }
+  }
+}
