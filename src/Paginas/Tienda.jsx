@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { useContext, useState } from 'react';
 import { useNavigate, } from 'react-router-dom';
-import ProductosContext from './ProductosProvider';
+import ProductosContext from '../componentes/ProductosProvider';
 import Pagination from 'react-bootstrap/Pagination';
 import Button from 'react-bootstrap/Button';
 function Tienda() {

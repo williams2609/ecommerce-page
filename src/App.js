@@ -1,11 +1,11 @@
 import BarraNavegacion from './componentes/BarraNavegacion';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './componentes/Home';
-import Tienda from './componentes/Tienda';
+import Home from './Paginas/Home';
+import Tienda from './Paginas/Tienda';
 import Productos from './componentes/Productos';
 import { ProductosProvider } from './componentes/ProductosProvider';
-import Contacto from './componentes/Contacto';
+import Contacto from './Paginas/Contacto';
 
 
 function App() {
