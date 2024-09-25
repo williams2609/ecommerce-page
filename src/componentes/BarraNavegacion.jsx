@@ -2,6 +2,8 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import icono from '../imagenes/icono.png'
 import '../estilos/barra.css'
+
+
 function BarraNavegacion() {
   return (
     <div className='contenedor-nav container-fluid'>

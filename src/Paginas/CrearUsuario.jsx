@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Form, Card, Alert } from 'react-bootstrap';
+import { auth } from '../componentes/FireBaseConfig';
+import { createUserWithEmailAndPassword } from "firebase/auth"; 
+import { getFirestore, doc, setDoc } from 'firebase/firestore';
+import { updateProfile } from "firebase/auth";
 
 function CrearUsuario() {
   const [inputValue, setInputValue] = useState({
@@ -13,6 +17,36 @@ function CrearUsuario() {
   const [validated, setValidated] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
+  
+  const db = getFirestore();
+
+  const registerUser = async (email, password, name, number) => {
+    try {
+      // Crear un nuevo usuario
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+  
+      // Actualizar el perfil del usuario
+      await updateProfile(user, {
+        displayName: name
+      });
+  
+      // Guardar información adicional en Firestore
+      await setDoc(doc(db, "usuarios", user.uid), {
+        name: name,
+        email: email,
+        number: number,
+      });
+  
+      console.log('Usuario registrado:', user);
+      setSubmitted(true);
+      setError('');
+    } catch (error) {
+      setError(`Error ${error.code}: ${error.message}`);
+      console.error('Error al registrar:', error.code, error.message);
+      setSubmitted(false);
+    }
+  };
 
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -21,7 +55,6 @@ function CrearUsuario() {
       [name]: value,
     });
 
-    // Reset error message when typing
     if (name === 'confirmPassword') {
       setError('');
     }
@@ -30,11 +63,8 @@ function CrearUsuario() {
   const handleSubmit = (e) => {
     const form = e.currentTarget;
     e.preventDefault();
-
-    // Reset error message
     setError('');
 
-    // Validate form
     if (form.checkValidity() === false) {
       setValidated(true);
     } else if (inputValue.password !== inputValue.confirmPassword) {
@@ -42,11 +72,7 @@ function CrearUsuario() {
       setValidated(true);
     } else {
       setValidated(false);
-      setSubmitted(true);
-      // Aquí puedes agregar lógica para enviar los datos a un servidor
-      console.log('Usuario creado:', inputValue);
-
-      // Resetear el formulario
+      registerUser(inputValue.email, inputValue.password, inputValue.name, inputValue.number);
       setInputValue({
         name: '',
         email: '',
@@ -113,7 +139,7 @@ function CrearUsuario() {
                   type='password'
                   onChange={handleInput}
                   placeholder='Confirme su Contraseña'
-                  isInvalid={validated && inputValue.password !== inputValue.confirmPassword} // Check for mismatch
+                  isInvalid={validated && inputValue.password !== inputValue.confirmPassword}
                 />
                 <Form.Control.Feedback type='invalid'>
                   {error || 'La contraseña no coincide.'}
@@ -129,10 +155,10 @@ function CrearUsuario() {
                   type='tel'
                   onChange={handleInput}
                   placeholder='Ingrese su Número de Teléfono'
-                  pattern='[0-9]{10}' // Ajustar el patrón según el formato deseado
+                  pattern='[0-9]{9}'
                 />
                 <Form.Control.Feedback type='invalid'>
-                  Ingrese un número de teléfono válido (10 dígitos).
+                  Ingrese un número de teléfono válido (9 dígitos).
                 </Form.Control.Feedback>
               </Form.Group>
               <Button className='mb-4' type='submit'>
@@ -140,6 +166,7 @@ function CrearUsuario() {
               </Button>
             </Form>
             {submitted && <Alert variant='success'>Usuario creado exitosamente!</Alert>}
+            {error && <Alert variant='danger'>{error}</Alert>}
           </Card>
         </div>
       </div>
