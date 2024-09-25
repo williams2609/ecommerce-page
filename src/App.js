@@ -8,21 +8,29 @@ import { ProductosProvider } from './componentes/ProductosProvider';
 import Contacto from './Paginas/Contacto';
 import Login from './Paginas/Login.tsx';
 import CrearUsuario from './Paginas/CrearUsuario.jsx';
+import Profile from './Paginas/Profile.jsx';
+
 
 
 function App() {
+
+
+
   return (
     <div className="App">
       <Router>
+      <ProductosProvider>
        <BarraNavegacion/>
-       <ProductosProvider>
         <Routes>
-          <Route path='/Home' element={<Home/>}/>
+          <Route path='/' element={<Home/>}/>
           <Route path='/Tienda' element={<Tienda/>}/>
           <Route path='/Contacto' element={<Contacto/>}/>
           <Route path='/Tienda/:productId' element={<Productos/>}/>
+     
           <Route path='/Login' element={<Login/>}/>
+
           <Route path='/crear-cuenta' element={<CrearUsuario/>}/>
+          <Route path='/perfil' element={<Profile/>}/>
         </Routes>
       </ProductosProvider>
       </Router>

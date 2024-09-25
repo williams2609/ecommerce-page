@@ -3,7 +3,7 @@
     flex-wrap: wrap;   
 }
 .navBar{
-    height: 100%;
+    padding: 10px;
 }
 .link{
     text-decoration: none;
@@ -34,4 +34,45 @@
 }
 .contenedor-carrito{
     margin-left: 20px;
+}
+.boton-carrito{
+    background-color: rgba(85, 33, 82, 0.603);
+    border: none;
+    border-radius: 0;
+    position: fixed;
+    right: 0;
+    bottom: 10px;
+    color: black ;
+    border-radius: 20px;
+    z-index: 20;
+
+}
+.boton-carrito:hover{
+    background-color: rgb(70, 0, 102);
+    
+}
+.carrito-compras{
+position: fixed;
+right: 0;
+bottom: 0;
+z-index: 10;
+height: 90vh;
+background-color: rgba(51, 50, 50, 0.938);
+border-radius: 5px;
+border: 3px solid blueviolet;
+color: rgb(178, 135, 218);
+overflow: scroll;
+}
+.p-carrito{
+    margin: 5px;
+}
+
+.boton-cantidad{
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 80%;
 }
