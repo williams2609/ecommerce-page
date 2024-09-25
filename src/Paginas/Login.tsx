@@ -1,18 +1,18 @@
-import React, { useState } from 'react'
-import { Button,Form,Alert,Card } from 'react-bootstrap'
+import React, { useState } from 'react';
+import { Button, Form, Alert, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-
+import { auth } from '../componentes/FireBaseConfig'; // Asegúrate de importar tu configuración de Firebase
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 function Login() {
-    const navigate = useNavigate()
-
-    const [formValue, setFormValue] = useState({
-    userName: '',
+  const navigate = useNavigate();
+  const [formValue, setFormValue] = useState({
+    email: '',
     contraseña: '',
   });
-  const [login, setLogin] = useState(false);
-  const [validated, setValidated] = useState(false); // Para manejar la validación
-
+  const [validated, setValidated] = useState(false);
+  const [error, setError] = useState('');
+  const [loginSuccessful, setLoginSuccessful] = useState(false);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -22,25 +22,32 @@ function Login() {
     });
   };
 
-const handleNavigate =()=>{
-  navigate('/crear-cuenta')
-
-}
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
 
-    // Validación simple para asegurarse que los campos no estén vacíos
     if (form.checkValidity() === false) {
       e.stopPropagation();
     } else {
-      setLogin(true); // Se establece el estado de login exitoso si la validación pasa
+      try {
+        // Intentar iniciar sesión con email y contraseña
+        await signInWithEmailAndPassword(auth, formValue.email, formValue.contraseña);
+        setLoginSuccessful(true);
+        setError('');
+
+        // Mostrar mensaje de éxito
+        setTimeout(() => {
+          // Redirigir al usuario a la página de la tienda después de 2 segundos
+          navigate('/tienda'); // Cambia esto a la ruta que desees
+        }, 2000); // Esperar 2 segundos
+      } catch (error) {
+        setError(`Error ${error.code}: ${error.message}`);
+        setLoginSuccessful(false);
+      }
     }
+
     setValidated(true); // Establece el estado de validación para mostrar mensajes
   };
-
-  console.log(formValue);
 
   return (
     <div className="contenedor-login container">
@@ -51,18 +58,18 @@ const handleNavigate =()=>{
           style={{ width: '500px' }}
         >
           <Form noValidate validated={validated} className="container" onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="userName">
-              <Form.Label>Nombre De Usuario</Form.Label>
+            <Form.Group className="mb-3" controlId="email">
+              <Form.Label>Email</Form.Label>
               <Form.Control
                 required
-                value={formValue.userName}
-                type="text"
-                placeholder="Ingresa el nombre de usuario"
-                name="userName"
+                value={formValue.email}
+                type="email"
+                placeholder="Ingresa tu email"
+                name="email"
                 onChange={handleInput}
               />
               <Form.Control.Feedback type="invalid">
-                Por favor ingresa tu nombre de usuario.
+                Por favor ingresa tu email.
               </Form.Control.Feedback>
             </Form.Group>
             
@@ -85,20 +92,25 @@ const handleNavigate =()=>{
               Ingresar
             </Button>
             <Form.Group className='mt-3'>
-            <a href='/crear-cuenta'>No tienes Cuenta aun?</a>
+              <a href='/crear-cuenta'>No tienes Cuenta aun?</a>
             </Form.Group>
           </Form>
         </Card>
 
-        {/* Mostrar mensaje solo si login es exitoso */}
-        {login && validated && (
+        {/* Mostrar mensaje de éxito o error */}
+        {loginSuccessful && validated && (
           <Alert variant="success" className="mt-3">
-            ¡Inicio de sesión completado!
+            ¡Sesion iniciada Correctamente! Redirigiendo a la tienda...
+          </Alert>
+        )}
+        {error && (
+          <Alert variant="danger" className="mt-3">
+            {error}
           </Alert>
         )}
       </div>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Form, Card, Alert } from 'react-bootstrap';
-import { auth } from '../componentes/FireBaseConfig';
+import { auth, db } from '../componentes/FireBaseConfig';
 import { createUserWithEmailAndPassword } from "firebase/auth"; 
-import { getFirestore, doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import { updateProfile } from "firebase/auth";
+import { useNavigate } from 'react-router-dom';
 
 function CrearUsuario() {
   const [inputValue, setInputValue] = useState({
@@ -18,35 +19,38 @@ function CrearUsuario() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
   
-  const db = getFirestore();
+ const navigate = useNavigate()
 
   const registerUser = async (email, password, name, number) => {
     try {
-      // Crear un nuevo usuario
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-  
-      // Actualizar el perfil del usuario
-      await updateProfile(user, {
-        displayName: name
-      });
-  
-      // Guardar información adicional en Firestore
-      await setDoc(doc(db, "usuarios", user.uid), {
-        name: name,
-        email: email,
-        number: number,
-      });
-  
-      console.log('Usuario registrado:', user);
-      setSubmitted(true);
-      setError('');
+        // Crear un nuevo usuario
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // Actualizar el perfil del usuario
+        await updateProfile(user, {
+            displayName: name
+        });
+
+        // Guardar información adicional en Firestore
+        await setDoc(doc(db, "usuarios", user.uid), {
+            name: name,
+            email: email,
+            number: number,
+        });
+
+        console.log('Usuario registrado:', user);
+        setSubmitted(true);
+        setTimeout(()=>{
+          navigate('/')
+        },1000)
+        setError('');
     } catch (error) {
-      setError(`Error ${error.code}: ${error.message}`);
-      console.error('Error al registrar:', error.code, error.message);
-      setSubmitted(false);
+        setError(`Error ${error.code}: ${error.message}`);
+        console.error('Error al registrar:', error.code, error.message);
+        setSubmitted(false);
     }
-  };
+};
 
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -66,20 +70,14 @@ function CrearUsuario() {
     setError('');
 
     if (form.checkValidity() === false) {
-      setValidated(true);
+      setValidated(false);
     } else if (inputValue.password !== inputValue.confirmPassword) {
       setError('Las contraseñas no coinciden.');
-      setValidated(true);
+      setValidated(false);
     } else {
       setValidated(false);
       registerUser(inputValue.email, inputValue.password, inputValue.name, inputValue.number);
-      setInputValue({
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        number: '',
-      });
+      
     }
   };
 
