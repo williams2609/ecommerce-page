@@ -167,7 +167,7 @@ const handleFilters = ()=>{
         currentProducts.map((product, index) => (
           <Card 
             key={index} 
-            className='col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 carta-productos d-flex justify-content-center align-items-center mb-4'
+            className='col-9 col-sm-6 col-md-4 col-lg-3 col-xl-2 carta-productos d-flex justify-content-center align-items-center mb-4'
           >
             <Card.Img 
               src={product.thumbnail} 
@@ -195,13 +195,14 @@ const handleFilters = ()=>{
       }
     </div>
 
-    <div className='d-flex justify-content-center'>
-      <Pagination>
+    <div className='d-flex justify-content-center align-items-center row'>
+      <Pagination className="col-12">
         <Pagination.First onClick={() => paginate(1)} />
         {currentPage !== 1 && <Pagination.Prev onClick={() => paginate(currentPage - 1)} />}
         <Pagination.Item>{currentPage}</Pagination.Item>
         {[...Array(totalPage).keys()].map(pageNumber => (
-          <Pagination.Item 
+         
+         <Pagination.Item 
             key={pageNumber + 1} 
             active={currentPage === pageNumber + 1} 
             onClick={() => paginate(pageNumber + 1)}

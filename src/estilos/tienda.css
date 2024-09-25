@@ -1,7 +1,8 @@
 .carta-productos{
 margin: 25px;
-height: 60vh;
+height: 100%;
 padding: 0;
+box-sizing: border-box;
 
 }
 .Img{
@@ -95,4 +96,19 @@ input[type=range]::-webkit-slider-thumb {
   }
   .f{
     cursor: pointer;
+  }
+  .pagination {
+    width: 100%; /* Asegura que la paginación ocupe el 100% del ancho disponible */
+    overflow-x: auto; /* Permite que se despliegue en caso de que haya muchos números de página */
+    white-space: nowrap; /* Asegura que los elementos de la paginación no se "rompan" en múltiples líneas */
+    justify-content: center; /* Centra el contenido */
+  }
+  @media (max-width: 576px) {
+    .pagination {
+      font-size: 12px; /* Reduce el tamaño de la fuente para pantallas pequeñas */
+    }
+    
+    .pagination-item {
+      padding: 0.25rem 0.5rem; /* Reduce el tamaño del padding entre los items */
+    }
   }

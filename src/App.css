@@ -2,3 +2,6 @@
   width: 60px;
   height: 50px;
 }
+.app{
+  box-sizing: border-box;
+}
