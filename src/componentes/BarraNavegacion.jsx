@@ -2,9 +2,25 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import icono from '../imagenes/icono.png'
 import '../estilos/barra.css'
-
+import { auth } from './FireBaseConfig';
+import { onAuthStateChanged } from 'firebase/auth';
+import { useEffect, useState } from 'react';
 
 function BarraNavegacion() {
+  const [user, setUser] = useState(null); // Estado para el usuario
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser); // Si el usuario está autenticado, establece el estado
+      } else {
+        setUser(null); // Si no, establece el estado a null
+      }
+    });
+
+    return () => unsubscribe(); // Limpia la suscripción al desmontar el componente
+  }, []);
+
   return (
     <div className='contenedor-nav container-fluid'>
       <div className='navBar d-flex align-items-center justify-content-between row'>
@@ -15,7 +31,8 @@ function BarraNavegacion() {
             <Link to="/Contacto" className='link'>Contacto</Link>
           </div>
           <div className='contenedor-sesion d-flex align-items-center justify-content-end col-md-3 col-xs-12'>
-            <Link to="/Login" className='link'>Login</Link>
+            {user === null &&
+            <Link to="/Login" className='link'>Login</Link>}
             <Link to="/Perfil" className='link'>Perfil</Link>
             <div className='contenedor-carrito'>
               <i className="icono-nav bi bi-cart3">Carrito</i>

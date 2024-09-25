@@ -11,7 +11,11 @@ import CrearUsuario from './Paginas/CrearUsuario.jsx';
 import Profile from './Paginas/Profile.jsx';
 
 
+
 function App() {
+
+
+
   return (
     <div className="App">
       <Router>
@@ -22,7 +26,9 @@ function App() {
           <Route path='/Tienda' element={<Tienda/>}/>
           <Route path='/Contacto' element={<Contacto/>}/>
           <Route path='/Tienda/:productId' element={<Productos/>}/>
+     
           <Route path='/Login' element={<Login/>}/>
+
           <Route path='/crear-cuenta' element={<CrearUsuario/>}/>
           <Route path='/perfil' element={<Profile/>}/>
         </Routes>
