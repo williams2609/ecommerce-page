@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import { FaStar } from 'react-icons/fa';
 import '../estilos/productos.css';
@@ -7,20 +7,18 @@ import { Card } from 'react-bootstrap';
 import ProductosContext from './ProductosProvider';
 
 function Productos() {
-    const { productId } = useParams()  
-    const products = useContext(ProductosContext);
+    const { productId } = useParams();
+    const { products, addToCart, carrito } = useContext(ProductosContext);  // Extrae addToCart del contexto
     const navigate = useNavigate();
-    const [product, setProduct] = useState(null); // Estado para almacenar el producto
+    const [product, setProduct] = useState(null);
 
-    const productos = products.products
-    useEffect(()=>{
-      if(Array.isArray(productos)){
-         const foundProducts = productos.find(p => p.id === parseInt(productId))
-         setProduct(foundProducts) 
-      }
-    },[productId, productos])
+    useEffect(() => {
+        if (Array.isArray(products)) {
+            const foundProduct = products.find(p => p.id === parseInt(productId));
+            setProduct(foundProduct);
+        }
+    }, [productId, products]);
 
-    // Manejo básico de errores
     if (!product) {
         return <p>Producto no encontrado.</p>;
     }
@@ -29,7 +27,12 @@ function Productos() {
         navigate(`/Tienda/${relatedProductId}`);
     };
 
-    const relatedProducts = productos.filter(p => p.category === product.category && p.id !== product.id);
+    const handleAddToCart = () => {
+        addToCart(product);  // Añade el producto al carrito
+        console.log(carrito)
+    };
+
+    const relatedProducts = products.filter(p => p.category === product.category && p.id !== product.id);
 
     return (
         <div className='contenedor-pagina-productos container-fluid'>
@@ -45,8 +48,7 @@ function Productos() {
                             .fill(0)
                             .map((_, i) => (
                                 <FaStar key={i} style={{ color: "#FFD700" }} />
-                            ))
-                        }
+                            ))}
                         <p>Rating: {product.rating}</p>
                     </div>
                     
@@ -63,17 +65,20 @@ function Productos() {
                     <p className='product-description'>{product.description}</p>
                     <div className='contenedor-botoness d-flex align-items-center justify-content-center'>
                         <Button variant="warning col-9 col-md-6">Comprar ahora</Button>
-                        <Button className='primary col-9 mt-2 col-md-6 botonAñadir'>Añadir Al Carrito</Button>
+                        <Button className='primary col-9 mt-2 col-md-6 botonAñadir'
+                                onClick={handleAddToCart}>
+                            Añadir Al Carrito
+                        </Button>
                     </div>
                 </div>
             </div>
 
             <div className='container-fluid mt-4 card'>
-                <strong className='mt-3'>Caracteristicas</strong>
-                <p><b>Descripcion: </b>{product.description}</p>
-                <p><b>Categoria: </b>{product.category}</p>
+                <strong className='mt-3'>Características</strong>
+                <p><b>Descripción: </b>{product.description}</p>
+                <p><b>Categoría: </b>{product.category}</p>
                 <p><b>Dimensiones: </b><b>Ancho: </b>{product.dimensions.width} <b>Alto: </b>{product.dimensions.height} <b>Profundidad: </b>{product.dimensions.depth}</p>
-                <p><b>Politica de Devoluciones: </b>{product.returnPolicy}</p>
+                <p><b>Política de Devoluciones: </b>{product.returnPolicy}</p>
             </div>
 
             <div className='Comentarios mt-4 mb-3'>
@@ -83,11 +88,9 @@ function Productos() {
                         <p><b>Nombre: </b> {rev.reviewerName}</p>
                         <p><b>Comentario: </b>{rev.comment}</p>
                         <div>
-                            {Array(Math.round(rev.rating)).fill(0)
-                                .map((_, i) => (
-                                    <FaStar key={i} style={{ color: "#FFD700" }} />
-                                ))
-                            }
+                            {Array(Math.round(rev.rating)).fill(0).map((_, i) => (
+                                <FaStar key={i} style={{ color: "#FFD700" }} />
+                            ))}
                         </div>
                     </div>
                 ))}
@@ -104,8 +107,7 @@ function Productos() {
                                 <p className='text-warning'><b>Descuento:</b> {producto.discountPercentage}% OFF</p>
                                 <Button 
                                     className='btn btn-warning mb-3'
-                                    onClick={() => handleNavigate(producto.id)}
-                                >
+                                    onClick={() => handleNavigate(producto.id)}>
                                     Ver Producto
                                 </Button>
                             </Card>

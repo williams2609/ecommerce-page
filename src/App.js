@@ -19,8 +19,8 @@ function App() {
   return (
     <div className="App">
       <Router>
+      <ProductosProvider>
        <BarraNavegacion/>
-       <ProductosProvider>
         <Routes>
           <Route path='/' element={<Home/>}/>
           <Route path='/Tienda' element={<Tienda/>}/>
