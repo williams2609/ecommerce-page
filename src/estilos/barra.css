@@ -3,7 +3,7 @@
     flex-wrap: wrap;   
 }
 .navBar{
-    height: 100%;
+    height: 65px;
 }
 .link{
     text-decoration: none;
