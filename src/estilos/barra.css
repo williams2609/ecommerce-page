@@ -54,6 +54,7 @@
 .carrito-compras{
 position: fixed;
 right: 0;
+bottom: 0;
 z-index: 10;
 height: 90vh;
 background-color: rgba(51, 50, 50, 0.938);

@@ -54,7 +54,7 @@ function BarraNavegacion() {
               <i className="icono-nav bi bi-cart3">Carrito</i>
               </Button>
               {showCart && 
-              <div className='col-5 col-xs-3  col-md-3 col-lg-3 col-xl-2  carrito-compras'>
+              <div className='col-5 col-md-3 col-lg-3 col-xl-2 carrito-compras'>
                 <div className='d-flex text-center'>
                 {carrito.length > 0 ? 
                 (<div className='container'>
