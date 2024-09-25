@@ -17,7 +17,7 @@ function App() {
        <BarraNavegacion/>
        <ProductosProvider>
         <Routes>
-          <Route path='/Home' element={<Home/>}/>
+          <Route path='/' element={<Home/>}/>
           <Route path='/Tienda' element={<Tienda/>}/>
           <Route path='/Contacto' element={<Contacto/>}/>
           <Route path='/Tienda/:productId' element={<Productos/>}/>
