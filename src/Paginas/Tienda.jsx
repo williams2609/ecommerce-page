@@ -16,7 +16,7 @@ const [selectedCategory,setSelectedCategory] = useState("")
 const [currentPage,setCurrentPage] = useState(1)
 const [minMaxPrice,setMinMaxPrice] = useState([0,50000])
 const [tempMinMax , setTempMinMax] = useState([0,50000])
-const [filtros,setFiltros] = useState(false)
+const [filtros,setFiltros] = useState(true)
 const [searchValue,setSearchValue] = useState("")
 
 const productsPerPage = 20
@@ -97,7 +97,7 @@ const handleFilters = ()=>{
   </div>
   
   <div className='d-flex justify-content-center text-center'>
-    <h3 className='filtros f' onClick={handleFilters}>Usar Filtros</h3>
+    <h3 className='filtros f' onClick={handleFilters}>Ocultar Filtros</h3>
   </div>
 
   {filtros && (
