@@ -11,9 +11,12 @@ export const ProductosProvider = ({ children }) => {
   useEffect(() => {
     const productsFetch = async () => {
       try {
-        const response = await fetch("https://dummyjson.com/products?limit=200");
+        const response = await fetch("http://localhost:3001/products");
+       if(!response.ok){
+        throw new Error("Error al obtener los Datos")
+       }
         const data = await response.json();
-        setProducts(data.products);
+        setProducts(data);
       } catch (error) {
         setError(error);
       }

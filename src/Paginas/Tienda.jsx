@@ -44,7 +44,7 @@ const paginate = (pageNumber) =>{
   setCurrentPage(pageNumber)
 } 
 
-console.log(categories)
+console.log(products)
 
 const handleNavigate = (product)=>{
   navigate(`/Tienda/${product.id}`, {state: product})
@@ -78,7 +78,7 @@ const handleFilters = ()=>{
 
   return (
 <div className='contenedor-productos'>
-  {error && <p>{error}</p>}
+{error && <p>{error.message || 'Ha ocurrido un error'}</p>}
   
   <div className="navbar bg-light p-3">
     <h3 className="navbar-brand titulo">Tienda</h3>
@@ -111,14 +111,17 @@ const handleFilters = ()=>{
             onChange={handleSelectedCategory}
           >
             <option value="">Todas las Categorías</option>
-            {categories.map((categoria, index) => (
+
+            {products && products.length > 0 ? 
+            categories.map((categoria, index) => (
               <option 
                 style={{ backgroundColor: "rgb(102, 0, 128)", color: "white" }} 
                 key={index}
               >
                 {categoria}
               </option>
-            ))}
+            )): <option>no hay productos disponibles</option>
+          }
           </select>
         </div>
         <div className='text-center'>
